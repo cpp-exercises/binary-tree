@@ -1,0 +1,37 @@
+#!/bin/bash
+# Utilities for making grade-scripts shorter
+
+clean() {
+	rm -f *.o a.out
+}
+
+# A function that echoes and executes a command,
+#   and exits in case of an error.
+exe() { 
+	echo "! ${@/eval/}" 
+	$@
+	ERROR=$?
+	if [ $ERROR -ne 0 ]
+	then 
+		printf "\n*** Error code: $ERROR. Grade: 0 ***\n"
+		clean
+		exit 1
+	fi
+}
+
+grade_make() {
+	make clean
+	exe make -f Makefile $1
+	exe timeout 1 ./$1
+	# exe ./$1
+	make clean
+	printf "\n\n"
+}
+
+grade_clang() {
+	clean
+	exe clang++-5.0 -std=c++17 $@
+	exe timeout 1 ./a.out
+	clean
+	printf "\n\n"
+}

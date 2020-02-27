@@ -1,0 +1,7 @@
+#!/bin/bash
+source grade_utils
+printf "\n\n*** Grade binary-tree *** \n\n"
+# grade_make demo
+grade_make test
+# grade_clang Tree.cpp TreeTestWithTimeout.cpp
+# grade_clang Tree.cpp TreeTest.cpp
